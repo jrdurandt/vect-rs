@@ -1,4 +1,4 @@
-use std::ops::Add;
+use std::ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign, Div};
 
 #[derive(Copy, Clone, Debug)]
 pub struct Vector4 {
@@ -16,6 +16,14 @@ impl Vector4 {
             z,
             w,
         }
+    }
+
+    pub fn length_squared(&self) -> f32 {
+        self.x * self.x + self.y * self.y + self.z * self.z + self.w * self.w
+    }
+
+    pub fn length(&self) -> f32 {
+        self.length_squared().sqrt()
     }
 }
 
@@ -46,5 +54,80 @@ impl Add<Vector4> for Vector4 {
             z: self.z + rhs.z,
             w: self.w + rhs.w,
         }
+    }
+}
+
+impl AddAssign<Vector4> for Vector4 {
+    fn add_assign(&mut self, rhs: Vector4) {
+        self.x += rhs.x;
+        self.y += rhs.y;
+        self.z += rhs.z;
+        self.w += rhs.w;
+    }
+}
+
+impl Sub<Vector4> for Vector4 {
+    type Output = Vector4;
+
+    fn sub(self, rhs: Vector4) -> Self::Output {
+        Vector4 {
+            x: self.x - rhs.x,
+            y: self.y - rhs.y,
+            z: self.z - rhs.z,
+            w: self.w - rhs.w,
+        }
+    }
+}
+
+impl SubAssign<Vector4> for Vector4 {
+    fn sub_assign(&mut self, rhs: Vector4) {
+        self.x -= rhs.x;
+        self.y -= rhs.y;
+        self.z -= rhs.z;
+        self.w -= rhs.w;
+    }
+}
+
+impl Mul<Vector4> for Vector4 {
+    type Output = Vector4;
+
+    fn mul(self, rhs: Vector4) -> Self::Output {
+        Vector4 {
+            x: self.x * rhs.x,
+            y: self.y * rhs.y,
+            z: self.z * rhs.z,
+            w: self.w * rhs.w,
+        }
+    }
+}
+
+impl MulAssign<Vector4> for Vector4 {
+    fn mul_assign(&mut self, rhs: Vector4) {
+        self.x *= rhs.x;
+        self.y *= rhs.y;
+        self.z *= rhs.z;
+        self.w *= rhs.w;
+    }
+}
+
+impl Mul<f32> for Vector4 {
+    type Output = Vector4;
+
+    fn mul(self, rhs: f32) -> Self::Output {
+        Vector4 {
+            x: self.x * rhs,
+            y: self.y * rhs,
+            z: self.z * rhs,
+            w: self.w * rhs,
+        }
+    }
+}
+
+impl MulAssign<f32> for Vector4 {
+    fn mul_assign(&mut self, rhs: f32) {
+        self.x *= rhs;
+        self.y *= rhs;
+        self.z *= rhs;
+        self.w *= rhs;
     }
 }
