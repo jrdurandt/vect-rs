@@ -455,3 +455,197 @@ impl DivAssign<f32> for Vector3 {
     }
 }
 //#endregion
+
+//#region Vector2
+#[derive(Copy, Clone, Debug)]
+pub struct Vector2 {
+    pub x: f32,
+    pub y: f32,
+}
+
+impl Vector2 {
+    pub fn zero() -> Vector2 {
+        Vector2 {
+            x: 0.0,
+            y: 0.0,
+        }
+    }
+
+    pub fn new(x: f32, y: f32) -> Vector2 {
+        Vector2 {
+            x,
+            y,
+        }
+    }
+
+    pub fn length_squared(&self) -> f32 {
+        self.x * self.x + self.y * self.y
+    }
+
+    pub fn length(&self) -> f32 {
+        self.length_squared().sqrt()
+    }
+
+    pub fn normalize(&mut self) {
+        let inv_length = 1.0 / self.length();
+        self.x *= inv_length;
+        self.y *= inv_length;
+    }
+
+    pub fn distance_squared(&self, other: &Vector2) -> f32 {
+        let d_x = self.x - other.x;
+        let d_y = self.y - other.y;
+
+        d_x * d_x + d_y * d_y
+    }
+
+    pub fn distance(&self, other: &Vector2) -> f32 {
+        self.distance_squared(other).sqrt()
+    }
+
+    pub fn dot(&self, other: &Vector2) -> f32 {
+        self.x * other.x + self.y * other.y
+    }
+}
+
+impl PartialEq<Vector2> for Vector2 {
+    fn eq(&self, other: &Vector2) -> bool {
+        self.x <= other.x + f32::EPSILON && self.x >= other.x + f32::EPSILON &&
+            self.y <= other.y + f32::EPSILON && self.y >= other.y + f32::EPSILON &&
+    }
+}
+
+impl From<[f32; 3]> for Vector2 {
+    fn from(e: [f32; 3]) -> Self {
+        Vector2 {
+            x: e[0],
+            y: e[1],
+        }
+    }
+}
+
+impl Into<[f32; 2]> for Vector2 {
+    fn into(self) -> [f32; 2] {
+        [self.x, self.y]
+    }
+}
+
+impl Neg for Vector2 {
+    type Output = Vector2;
+
+    fn neg(self) -> Self::Output {
+        Vector2 {
+            x: -self.x,
+            y: -self.y,
+        }
+    }
+}
+
+impl Add<Vector2> for Vector2 {
+    type Output = Vector2;
+
+    fn add(self, rhs: Vector2) -> Self::Output {
+        Vector2 {
+            x: self.x + rhs.x,
+            y: self.y + rhs.y,
+        }
+    }
+}
+
+impl AddAssign<Vector2> for Vector2 {
+    fn add_assign(&mut self, rhs: Vector2) {
+        self.x += rhs.x;
+        self.y += rhs.y;
+    }
+}
+
+impl Sub<Vector2> for Vector2 {
+    type Output = Vector2;
+
+    fn sub(self, rhs: Vector2) -> Self::Output {
+        Vector2 {
+            x: self.x - rhs.x,
+            y: self.y - rhs.y,
+        }
+    }
+}
+
+impl SubAssign<Vector2> for Vector2 {
+    fn sub_assign(&mut self, rhs: Vector2) {
+        self.x -= rhs.x;
+        self.y -= rhs.y;
+    }
+}
+
+impl Mul<Vector2> for Vector2 {
+    type Output = Vector2;
+
+    fn mul(self, rhs: Vector2) -> Self::Output {
+        Vector2 {
+            x: self.x * rhs.x,
+            y: self.y * rhs.y,
+        }
+    }
+}
+
+impl MulAssign<Vector2> for Vector2 {
+    fn mul_assign(&mut self, rhs: Vector2) {
+        self.x *= rhs.x;
+        self.y *= rhs.y;
+    }
+}
+
+impl Mul<f32> for Vector2 {
+    type Output = Vector2;
+
+    fn mul(self, rhs: f32) -> Self::Output {
+        Vector2 {
+            x: self.x * rhs,
+            y: self.y * rhs,
+        }
+    }
+}
+
+impl MulAssign<f32> for Vector2 {
+    fn mul_assign(&mut self, rhs: f32) {
+        self.x *= rhs;
+        self.y *= rhs;
+    }
+}
+
+impl Div<Vector2> for Vector2 {
+    type Output = Vector2;
+
+    fn div(self, rhs: Vector2) -> Self::Output {
+        Vector2 {
+            x: self.x / rhs.x,
+            y: self.y / rhs.y,
+        }
+    }
+}
+
+impl DivAssign<Vector2> for Vector2 {
+    fn div_assign(&mut self, rhs: Vector2) {
+        self.x /= rhs.x;
+        self.y /= rhs.y;
+    }
+}
+
+impl Div<f32> for Vector2 {
+    type Output = Vector2;
+
+    fn div(self, rhs: f32) -> Self::Output {
+        Vector2 {
+            x: self.x / rhs,
+            y: self.y / rhs,
+        }
+    }
+}
+
+impl DivAssign<f32> for Vector2 {
+    fn div_assign(&mut self, rhs: f32) {
+        self.x /= rhs;
+        self.y /= rhs;
+    }
+}
+//#endregion
