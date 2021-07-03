@@ -511,7 +511,7 @@ impl Vector2 {
 impl PartialEq<Vector2> for Vector2 {
     fn eq(&self, other: &Vector2) -> bool {
         self.x <= other.x + f32::EPSILON && self.x >= other.x + f32::EPSILON &&
-            self.y <= other.y + f32::EPSILON && self.y >= other.y + f32::EPSILON &&
+            self.y <= other.y + f32::EPSILON && self.y >= other.y + f32::EPSILON
     }
 }
 
